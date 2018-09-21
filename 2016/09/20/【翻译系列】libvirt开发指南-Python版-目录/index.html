@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/shinubi128_128.ico?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/shinubi128_128.ico?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/shinubi128_128.ico?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="libvirt;开发指南; 教程; libvirt_Application_Development_Guides," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="感谢朋友支持本博客，欢迎共同探讨交流。由于能力和时间有限，错误之处在所难免，欢迎指正！原创作品，允许转载，转载时请务必以超链接形式标明文章原始出处 、作者信息和本声明。如果转载，请保留作者信息。博客地址：https://gscsnm.github.io邮箱地址：gscsnm@gmail.com  由于近期使用libvirt，但是发现中文学习材料很少，故来大概翻译一下官方的材料，恶心我一个人就行了，">
+<meta name="keywords" content="libvirt;开发指南; 教程; libvirt_Application_Development_Guides">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【翻译系列】libvirt开发指南-Python版-目录">
+<meta property="og:url" content="http://yoursite.com/2016/09/20/【翻译系列】libvirt开发指南-Python版-目录/index.html">
+<meta property="og:site_name" content="い十指演绎生活〃">
+<meta property="og:description" content="感谢朋友支持本博客，欢迎共同探讨交流。由于能力和时间有限，错误之处在所难免，欢迎指正！原创作品，允许转载，转载时请务必以超链接形式标明文章原始出处 、作者信息和本声明。如果转载，请保留作者信息。博客地址：https://gscsnm.github.io邮箱地址：gscsnm@gmail.com  由于近期使用libvirt，但是发现中文学习材料很少，故来大概翻译一下官方的材料，恶心我一个人就行了，">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-09-21T05:07:09.107Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【翻译系列】libvirt开发指南-Python版-目录">
+<meta name="twitter:description" content="感谢朋友支持本博客，欢迎共同探讨交流。由于能力和时间有限，错误之处在所难免，欢迎指正！原创作品，允许转载，转载时请务必以超链接形式标明文章原始出处 、作者信息和本声明。如果转载，请保留作者信息。博客地址：https://gscsnm.github.io邮箱地址：gscsnm@gmail.com  由于近期使用libvirt，但是发现中文学习材料很少，故来大概翻译一下官方的材料，恶心我一个人就行了，">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/09/20/【翻译系列】libvirt开发指南-Python版-目录/"/>
+
+
+
+
+
+  <title>【翻译系列】libvirt开发指南-Python版-目录 | い十指演绎生活〃</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?8c30395e53c089139c092a7b8b4dc590";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">い十指演绎生活〃</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/20/【翻译系列】libvirt开发指南-Python版-目录/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="い十指演绎生活〃">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/shinubi.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="い十指演绎生活〃">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【翻译系列】libvirt开发指南-Python版-目录</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-09-20T11:00:00+08:00">
+                2016-09-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>感谢朋友支持本博客，欢迎共同探讨交流。<br>由于能力和时间有限，错误之处在所难免，欢迎指正！<br>原创作品，允许转载，转载时请务必以超链接形式标明文章原始出处 、作者信息和本声明。如果转载，请保留作者信息。<br>博客地址：<a href="https://gscsnm.github.io" target="_blank" rel="noopener">https://gscsnm.github.io</a><br>邮箱地址：<a href="mailto:gscsnm@gmail.com" target="_blank" rel="noopener">gscsnm@gmail.com</a></p>
+<hr>
+<p>由于近期使用libvirt，但是发现中文学习材料很少，故来大概翻译一下官方的材料，恶心我一个人就行了，方面大家。本人水平有限，凑合着看吧。部分句子或段落的翻译加上了个人理解，不喜勿喷。<br>原文链接： </p>
+<h2 id="http-libvirt-org-docs-libvirt-appdev-guide-python-en-US-html"><a href="#http-libvirt-org-docs-libvirt-appdev-guide-python-en-US-html" class="headerlink" title="http://libvirt.org/docs/libvirt-appdev-guide-python/en-US/html/"></a><a href="http://libvirt.org/docs/libvirt-appdev-guide-python/en-US/html/" target="_blank" rel="noopener">http://libvirt.org/docs/libvirt-appdev-guide-python/en-US/html/</a></h2><h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
+<li>前言<ul>
+<li>文档约定<ul>
+<li>排版约定</li>
+<li>引文 约定</li>
+<li>提醒和警告</li>
+</ul>
+</li>
+<li>我们需要反馈!</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>简介<br>1.1. 概述<br>1.2. 术语表<a id="more"></a></li>
+<li><p>结构<br>2.1. 对象模型<br>2.1.1. 连接Hypervisor<br>2.1.2. 客户域Guest Domains<br>2.1.3. 虚拟网络<br>2.1.4. 存储池<br>2.1.5. 存储卷<br>2.1.6. 主机设备<br>2.2. 驱动程序模型<br>2.3. 远程管理<br>2.3.1. 基本用法<br>2.3.2. 数据传输<br>2.3.3. 身份验证方案<br>2.4. 生成TLS证书<br>2.4.1. 公钥的设置  </p>
+</li>
+<li><p>连接<br>3.1. 概述<br>3.1.1. open<br>3.1.2. openReadOnly<br>3.1.3. openAuth<br>3.1.4. close<br>3.2. URI格式<br>3.2.1. 本地URI<br>3.2.2. 远程URI<br>3.3. 性能信息的方法（Capability Information Methods）<br>3.4. 主机信息<br>3.4.1. getHostname<br>3.4.2. getMaxVcpus<br>3.4.3. getInfo<br>3.4.4. getCellsFreeMemory<br>3.4.5. getType<br>3.4.6. getVersion<br>3.4.7. getLibVersion<br>3.4.8. getURI<br>3.4.9. isEncrypted<br>3.4.10. isSecure<br>3.4.11. isAlive<br>3.4.12. compareCPU<br>3.4.13. getFreeMemory<br>3.4.14. getFreePages<br>3.4.15. getMemoryParameters<br>3.4.16. getMemoryStats<br>3.4.17. getSecurityModel<br>3.4.18. getSysinfo<br>3.4.19. getCPUMap<br>3.4.20. getCPUStats<br>3.4.21. getCPUModelNames  </p>
+</li>
+<li><p>客户域（Guest Domains）<br>4.1. 域概述<br>4.2. 列出域（Listing Domains）<br>4.3. 获得域信息<br>4.3.1. 获取一个域的ID<br>4.3.2. 获取一个域的UUID<br>4.3.3. 获取域的操作系统类型<br>4.3.4. 确定当前域是否有一个快照<br>4.3.5. 确定域是否已经保存镜像<br>4.3.6. 获取域的主机名<br>4.3.7. 获取域的硬件信息<br>4.3.8. 确定域是否正在运行<br>4.3.9. 确定域是否是持久的<br>4.3.10. 确定域是否被更新过<br>4.3.11. 确定域的最大内存<br>4.3.12. 确定域的最大vcpu数量<br>4.3.13. 获取域的名字<br>4.3.14. 获取域的状态<br>4.3.15. 获取域的时间信息<br>4.4. 生命周期控制<br>4.4.1. 配置和启动<br>4.4.2. 停止<br>4.4.3. 暂停/恢复和保存/恢复<br>4.4.4. 迁移<br>4.4.5. 自动启动<br>4.5. 域配置<br>4.5.1. 引导模式<br>4.5.2. 内存/ CPU资源<br>4.6. 监控性能<br>4.6.1. 域的块设备性能<br>4.6.2. vCPU性能<br>4.6.3. 内存统计信息<br>4.6.4. I/O统计信息<br>4.7. 设备配置<br>4.7.1. 模拟器<br>4.7.2. 磁盘<br>4.7.3. 网络<br>4.7.4. 鼠标、键盘和平板电脑<br>4.7.5. USB设备透传<br>4.7.6. PCI设备透传<br>4.8. 活配置更改（Live Configuration Change）<br>4.8.1. 块设备工作（Block Device Jobs）  </p>
+</li>
+<li><p>存储池<br>5.1. 概述<br>5.2. 列出池内容（Listing pools）<br>5.3. 池的使用<br>5.4. 生命周期控制<br>5.5. 获得池的来源（Discovering pool soutces）<br>5.6. 池配置<br>5.7. 卷的概述<br>5.8. 卷清单（Listing volumes）<br>5.9. 卷信息<br>5.10. 创建和删除卷<br>5.11. 克隆卷<br>5.12. 配置卷  </p>
+</li>
+<li><p>虚拟网络<br>6.1. 概述<br>6.2. 列出网络（Listing networks）<br>6.3. 生命周期控制<br>6.4. 网络配置 </p>
+</li>
+<li><p>网络接口<br>7.1. 概述<br>7.2. XML接口描述格式<br>7.3. 检索信息的接口<br>7.3.1. 列举接口<br>7.3.2. 获得一个接口实例（Obtaining a virInterface instance for an Interface）<br>7.3.3. 获取详细的接口信息<br>7.3.4. 获取接口的网络地址<br>7.4. 管理接口配置文件<br>7.4.1. 定义一个接口配置<br>7.4.2. 取消（undefining）一个接口配置<br>7.4.3. changeRollback<br>7.4.4. changeBegin<br>7.4.5. changeCommit<br>7.5. 生命周期管理界面<br>7.5.1. 激活一个接口<br>7.5.2. 停用一个接口  </p>
+</li>
+<li><p>错误处理<br>8.1. virGetLastError<br>8.2. SublibvirtError<br>8.3. 注册一个错误处理函数  </p>
+</li>
+<li><p>事件和定时器处理<br>9.1. 事件处理<br>9.2. 定时器处理  </p>
+</li>
+<li><p>安全模型  </p>
+</li>
+<li><p>调试/日志记录<br>11.1. 环境变量  </p>
+</li>
+</ol>
+<p>A. 修订历史  </p>
+<hr>
+<h2 id="原文："><a href="#原文：" class="headerlink" title="原文："></a>原文：</h2><h3 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h3><ul>
+<li>Document Conventions  <ul>
+<li>Typographic Conventions  </li>
+<li>Pull-quote Conventions  </li>
+<li>Notes and Warnings </li>
+</ul>
+</li>
+<li>We Need Feedback!  </li>
+</ul>
+<ol>
+<li>Introduction<br>1.1. Overview<br>1.2. Glossary of terms  </li>
+<li><p>Architecture<br>2.1. Object model<br>2.1.1. Hypervisor connections<br>2.1.2. Guest domains<br>2.1.3. Virtual networks<br>2.1.4. Storage pools<br>2.1.5. Storage volumes<br>2.1.6. Host devices<br>2.2. Driver model<br>2.3. Remote management<br>2.3.1. Basic usage<br>2.3.2. Data Transports<br>2.3.3. Authentication schemes<br>2.4. Generating TLS certificates<br>2.4.1. Public Key Infrastructure setup  </p>
+</li>
+<li><p>Connections<br>3.1. Overview<br>3.1.1. open<br>3.1.2. openReadOnly<br>3.1.3. openAuth<br>3.1.4. close<br>3.2. URI formats<br>3.2.1. Local URIs<br>3.2.2. Remote URIs<br>3.3. Capability Information Methods<br>3.4. Host information<br>3.4.1. getHostname<br>3.4.2. getMaxVcpus<br>3.4.3. getInfo<br>3.4.4. getCellsFreeMemory<br>3.4.5. getType<br>3.4.6. getVersion<br>3.4.7. getLibVersion<br>3.4.8. getURI<br>3.4.9. isEncrypted<br>3.4.10. isSecure<br>3.4.11. isAlive<br>3.4.12. compareCPU<br>3.4.13. getFreeMemory<br>3.4.14. getFreePages<br>3.4.15. getMemoryParameters<br>3.4.16. getMemoryStats<br>3.4.17. getSecurityModel<br>3.4.18. getSysinfo<br>3.4.19. getCPUMap<br>3.4.20. getCPUStats<br>3.4.21. getCPUModelNames   </p>
+</li>
+<li><p>Guest Domains<br>4.1. Domain Overview<br>4.2. Listing Domains<br>4.3. Obtaining State Information About a Domain<br>4.3.1. Fetching the ID of a domain<br>4.3.2. Fetching the UUID of a domain<br>4.3.3. Fetching the OS type of a domain<br>4.3.4. Determining if the domain has a current snapshot<br>4.3.5. Determining if the domain has managed save images<br>4.3.6. Fetch the hostname of the domain<br>4.3.7. Get the Domain hardware info<br>4.3.8. Determine if the Domain is running<br>4.3.9. Determine if the Domain is persistent<br>4.3.10. Determine if the Domain is updated<br>4.3.11. Determine the max memory of the Domain<br>4.3.12. Determine the max Vcpus of the Domain<br>4.3.13. Fetch the name of the Domain<br>4.3.14. Fetch the state of the Domain<br>4.3.15. Extract the time information from Domain  </p>
+</li>
+</ol>
+<p>4.4. Lifecycle Control<br>4.4.1. Provisioning and Starting<br>4.4.2. Stopping<br>4.4.3. Suspend / Resume and Save / Restore<br>4.4.4. Migration<br>4.4.5. Autostart<br>4.5. Domain Configuration<br>4.5.1. Boot Modes<br>4.5.2. Memory / CPU Resources<br>4.6. Monitoring Performance<br>4.6.1. Domain Block Device Performance<br>4.6.2. vCPU Performance<br>4.6.3. Memory Statistics<br>4.6.4. I/O Statistics<br>4.7. Device configuration<br>4.7.1. Emulator<br>4.7.2. Disks<br>4.7.3. Networking<br>4.7.4. Mice, Keyboard &amp; Tablets<br>4.7.5. USB Device Passthrough<br>4.7.6. PCI device passthrough<br>4.8. Live Configuration Change<br>4.8.1. Block Device Jobs  </p>
+<ol start="5">
+<li><p>Storage Pools<br>5.1. Overview<br>5.2. Listing pools<br>5.3. Pool usage<br>5.4. Lifecycle control<br>5.5. Discovering pool sources<br>5.6. Pool configuration<br>5.7. Volume overview<br>5.8. Listing volumes<br>5.9. Volume information<br>5.10. Creating and deleting volumes<br>5.11. Cloning volumes<br>5.12. Configuring volumes  </p>
+</li>
+<li><p>Virtual Networks<br>6.1. Overview<br>6.2. Listing networks<br>6.3. Lifecycle control<br>6.4. Network configuration  </p>
+</li>
+<li><p>Network Interfaces<br>7.1. Overview<br>7.2. XML Interface Description Format<br>7.3. Retrieving Information About Interfaces<br>7.3.1. Enumerating Interfaces<br>7.3.2. Obtaining a virInterface instance for an Interface<br>7.3.3. Retrieving Detailed Interface Information<br>7.3.4. Retrieving Interface Network Addresses<br>7.4. Managing interface configuration files<br>7.4.1. Defining an interface configuration<br>7.4.2. Undefining an interface configuration<br>7.4.3. changeRollback<br>7.4.4. changeBegin<br>7.4.5. changeCommit<br>7.5. Interface lifecycle management<br>7.5.1. Activating an interface<br>7.5.2. Deactivating an interface  </p>
+</li>
+<li><p>Error Handling<br>8.1. virGetLastError<br>8.2. Subclassing libvirtError<br>8.3. Registering an Error Handler Function  </p>
+</li>
+<li><p>Event and Timer Handling<br>9.1. Event Handling<br>9.2. Timer Handling  </p>
+</li>
+<li><p>Security Model  </p>
+</li>
+<li><p>Debugging / Logging<br>11.1. Environment Variables  </p>
+</li>
+</ol>
+<p>A. Revision History  </p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/libvirt-开发指南-教程-libvirt-Application-Development-Guides/" rel="tag"># libvirt;开发指南; 教程; libvirt_Application_Development_Guides</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/20/【qemu-kvm & libvirt系列】qemu-kvm & KVM & libvirt介绍/" rel="next" title="【qemu-kvm & libvirt系列】qemu-kvm & KVM & libvirt介绍">
+                <i class="fa fa-chevron-left"></i> 【qemu-kvm & libvirt系列】qemu-kvm & KVM & libvirt介绍
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/20/【翻译系列】libvirt开发指南-Python版-前言/" rel="prev" title="【翻译系列】libvirt开发指南-Python版-前言">
+                【翻译系列】libvirt开发指南-Python版-前言 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/shinubi.jpg"
+                alt="い十指演绎生活〃" />
+            
+              <p class="site-author-name" itemprop="name">い十指演绎生活〃</p>
+              <p class="site-description motion-element" itemprop="description">慎独</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#http-libvirt-org-docs-libvirt-appdev-guide-python-en-US-html"><span class="nav-number">1.</span> <span class="nav-text">http://libvirt.org/docs/libvirt-appdev-guide-python/en-US/html/</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目录"><span class="nav-number">2.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原文："><span class="nav-number">3.</span> <span class="nav-text">原文：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Preface"><span class="nav-number">3.1.</span> <span class="nav-text">Preface</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">い十指演绎生活〃</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

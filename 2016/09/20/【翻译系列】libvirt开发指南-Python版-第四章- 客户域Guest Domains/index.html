@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/shinubi128_128.ico?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/shinubi128_128.ico?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/shinubi128_128.ico?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="libvirt,开发指南, 教程, libvirt_Application_Development_Guides," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="感谢朋友支持本博客，欢迎共同探讨交流。由于能力和时间有限，错误之处在所难免，欢迎指正！原创作品，允许转载，转载时请务必以超链接形式标明文章原始出处 、作者信息和本声明。如果转载，请保留作者信息。博客地址：https://gscsnm.github.io邮箱地址：gscsnm@gmail.com  由于近期使用libvirt，但是发现中文学习材料很少，故来大概翻译一下官方的材料，恶心我一个人就行了，">
+<meta name="keywords" content="libvirt,开发指南, 教程, libvirt_Application_Development_Guides">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【翻译系列】libvirt开发指南-Python版-第四章-客户域（Guest Domains）">
+<meta property="og:url" content="http://yoursite.com/2016/09/20/【翻译系列】libvirt开发指南-Python版-第四章- 客户域Guest Domains/index.html">
+<meta property="og:site_name" content="い十指演绎生活〃">
+<meta property="og:description" content="感谢朋友支持本博客，欢迎共同探讨交流。由于能力和时间有限，错误之处在所难免，欢迎指正！原创作品，允许转载，转载时请务必以超链接形式标明文章原始出处 、作者信息和本声明。如果转载，请保留作者信息。博客地址：https://gscsnm.github.io邮箱地址：gscsnm@gmail.com  由于近期使用libvirt，但是发现中文学习材料很少，故来大概翻译一下官方的材料，恶心我一个人就行了，">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/pictures/翻译-libvirt开发指南-python-4.0-1%20guest-state-transition.png">
+<meta property="og:image" content="http://yoursite.com/pictures/翻译-libvirt开发指南-python-4.6-1.png">
+<meta property="og:updated_time" content="2018-09-21T05:07:09.110Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【翻译系列】libvirt开发指南-Python版-第四章-客户域（Guest Domains）">
+<meta name="twitter:description" content="感谢朋友支持本博客，欢迎共同探讨交流。由于能力和时间有限，错误之处在所难免，欢迎指正！原创作品，允许转载，转载时请务必以超链接形式标明文章原始出处 、作者信息和本声明。如果转载，请保留作者信息。博客地址：https://gscsnm.github.io邮箱地址：gscsnm@gmail.com  由于近期使用libvirt，但是发现中文学习材料很少，故来大概翻译一下官方的材料，恶心我一个人就行了，">
+<meta name="twitter:image" content="http://yoursite.com/pictures/翻译-libvirt开发指南-python-4.0-1%20guest-state-transition.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/09/20/【翻译系列】libvirt开发指南-Python版-第四章- 客户域Guest Domains/"/>
+
+
+
+
+
+  <title>【翻译系列】libvirt开发指南-Python版-第四章-客户域（Guest Domains） | い十指演绎生活〃</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?8c30395e53c089139c092a7b8b4dc590";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">い十指演绎生活〃</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/20/【翻译系列】libvirt开发指南-Python版-第四章- 客户域Guest Domains/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="い十指演绎生活〃">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/shinubi.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="い十指演绎生活〃">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【翻译系列】libvirt开发指南-Python版-第四章-客户域（Guest Domains）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-09-20T11:05:27+08:00">
+                2016-09-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>感谢朋友支持本博客，欢迎共同探讨交流。<br>由于能力和时间有限，错误之处在所难免，欢迎指正！<br>原创作品，允许转载，转载时请务必以超链接形式标明文章原始出处 、作者信息和本声明。如果转载，请保留作者信息。<br>博客地址：<a href="https://gscsnm.github.io" target="_blank" rel="noopener">https://gscsnm.github.io</a><br>邮箱地址：<a href="mailto:gscsnm@gmail.com" target="_blank" rel="noopener">gscsnm@gmail.com</a></p>
+<hr>
+<p>由于近期使用libvirt，但是发现中文学习材料很少，故来大概翻译一下官方的材料，恶心我一个人就行了，方面大家。本人水平有限，凑合着看吧。部分句子或段落的翻译加上了个人理解，不喜勿喷。<br>原文链接：<br><a href="http://libvirt.org/docs/libvirt-appdev-guide-python/en-US/html/" target="_blank" rel="noopener">http://libvirt.org/docs/libvirt-appdev-guide-python/en-US/html/</a></p>
+<hr>
+<h1 id="第四章-客户域-Guest-Domains"><a href="#第四章-客户域-Guest-Domains" class="headerlink" title="第四章 客户域 Guest Domains"></a>第四章 客户域 Guest Domains</h1><h2 id="4-1-概述"><a href="#4-1-概述" class="headerlink" title="4.1. 概述"></a>4.1. 概述</h2><p>域（guest）是一个运行在虚拟机上的操作系统的实例。客户域（guest domain）可以引用一个运行的虚拟机或可用于启动一个虚拟机的配置。连接对象提供了方法列举客户域，创建新的客户域和管理现有的域。客户域的用 virDomainPtr 对象表示，有很多独特的标识符:<br><a id="more"></a><br>惟一标识符</p>
+<blockquote>
+<p>ID :正整数，在一个主机上运行的客人域中是 独一无二 的。一个不活跃（inactive）的域没有ID。如果主机操作系统是一个虚拟的域，它给出了一个ID默认为0。例如，使用Xen， Dom0 表明一个客户域。其他域id将从1开始分配，每当新的域start，增加1。域ID通常不会被重用，直到整个ID空间都被使用。域ID空间至少16位的大小，但往往延伸到32位。</p>
+</blockquote>
+<blockquote>
+<p>name :域的名字，short string，在一个主机上所有客人域中是 独一无二 的，包括运行的和不运行的域。为了获得最大的可移植性，应该只使用字符 <code>0-9，a-z， -， _</code> 。许多虚拟机监控程序将存储域的配置文件，使用域的名字为文件名。</p>
+</blockquote>
+<blockquote>
+<p>UUID :16个无符号字节，保证在任何主机上所有客户域是唯一的。 RFC 4122定义格式的uuid和提供了一种推荐算法生成uuid和保证唯一性。 如果主机操作系统本身就是一个虚拟域，然后按照惯例将分配全0的UUID。</p>
+</blockquote>
+<p>客人域可能是临时的，或持久的。临时域只能在主机上运行时被管理，当断电/关机（poweroff）时，所有的痕迹就会消失。持久域有自己的配置保存在一个数据存储中。因此当客户域被关闭，仍然可以管理其不活动的配置。临时客户域可以通过定义一个配置文件转化为持久域。  </p>
+<p>一旦应用程序获得了域的惟一标识符，它常常会想获得相应的 virDomain 对象。有三个查找现有域的方法，lookupByID ，lookupByName 和 lookupByUUID， 使用域标识符作为参数。如果没有匹配的域存在，将返回 None。错误的对象可以查询如果需要找到具体的细节错误。</p>
+<p>例4.1.  通过ID获取一个域对象<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Example-1.py</span></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> libvirt</span><br><span class="line"></span><br><span class="line">conn = libvirt.open(<span class="string">'qemu:///system'</span>)</span><br><span class="line"><span class="keyword">if</span> conn == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to open connection to qemu:///system'</span>， file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">domainID = <span class="number">6</span></span><br><span class="line">dom = conn.lookupByID(domainID)</span><br><span class="line"><span class="keyword">if</span> dom == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to get the domain object'</span>， file=sys.stderr)</span><br><span class="line"></span><br><span class="line">conn.close()</span><br><span class="line">exit(<span class="number">0</span>)</span><br></pre></td></tr></table></figure></p>
+<p>注意：如果域没有运行的话（是不活跃的），lookupByID 方法不能使用。不活跃的域的ID都是 -1 。</p>
+<p>例4.2.  通过name获取一个域对象</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Example-2.py</span></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> libvirt</span><br><span class="line"></span><br><span class="line">conn = libvirt.open(<span class="string">'qemu:///system'</span>)</span><br><span class="line"><span class="keyword">if</span> conn == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to open connection to qemu:///system'</span>， file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">domainName = <span class="string">'someguest'</span></span><br><span class="line">dom = conn.lookupByName(domainName)</span><br><span class="line"><span class="keyword">if</span> dom == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to get the domain object'</span>， file=sys.stderr)</span><br><span class="line"></span><br><span class="line">conn.close()</span><br></pre></td></tr></table></figure>
+<p>例4.3.  通过 UUID 获取一个域对象<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Example-3.py</span></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> libvirt</span><br><span class="line"></span><br><span class="line">conn = libvirt.open(<span class="string">'qemu:///system'</span>)</span><br><span class="line"><span class="keyword">if</span> conn == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to open connection to qemu:///system'</span>， file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">domainUUID = <span class="string">'00311636-7767-71d2-e94a-26e7b8bad250'</span></span><br><span class="line">dom = conn.lookupByUUID(domainUUID)</span><br><span class="line"><span class="keyword">if</span> dom == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to get the domain object'</span>， file=sys.stderr)</span><br><span class="line"></span><br><span class="line">conn.close()</span><br><span class="line">exit(<span class="number">0</span>)</span><br></pre></td></tr></table></figure></p>
+<p>使用UUID查询域对象的例子，使用打印格式的UUID。Python不支持使用原始字节的uuid。<br>The UUID example used the example above uses the printable format of UUID. Using the equivalent raw bytes is not supported by Python.</p>
+<hr>
+<h2 id="4-2-列举域（Listing-Domains）"><a href="#4-2-列举域（Listing-Domains）" class="headerlink" title="4.2. 列举域（Listing Domains）"></a>4.2. 列举域（Listing Domains）</h2><p>libvirt类有两个列表，第一个包含运行着的（活跃的）域，第二个包含不活跃、持久性的域。列表是不重叠的、互斥集合。但是，在每组集合查询中，有可能域在停止或启动（though there is always a small possibility that a domain can stop or start in between the querying of each set. ）。在文字后面描述的事件类中提供了一种方法，来追踪所有生命周期的变化，以避免这种潜在的紊乱情况。  </p>
+<p>列出活动域的方法，返回一个域id的列表。每一个运行域都有一个正整数的ID，并且独一无二的标识了主机上运行域。列出活跃域的方法 - listDomainsID() 不需要参数。出错会返回None，否则返回一个以 int 类型保存域 ID 的 Python 列表。  </p>
+<p>例4.4.  列出活跃域  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Example-4.py</span></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> libvirt</span><br><span class="line"></span><br><span class="line">conn = libvirt.open(<span class="string">'qemu:///system'</span>)</span><br><span class="line"><span class="keyword">if</span> conn == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to open connection to qemu:///system'</span>， file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">domainIDs = conn.listDomainsID()</span><br><span class="line"><span class="keyword">if</span> domainIDs == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to get a list of domain IDs'</span>， file=sys.stderr)</span><br><span class="line"></span><br><span class="line">print(<span class="string">"Active domain IDs:"</span>)</span><br><span class="line"><span class="keyword">if</span> len(domainIDs) == <span class="number">0</span>:</span><br><span class="line">    print(<span class="string">'  None'</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="keyword">for</span> domainID <span class="keyword">in</span> domainIDs:</span><br><span class="line">        print(<span class="string">'  '</span>+str(domainID))</span><br><span class="line"></span><br><span class="line">conn.close()</span><br><span class="line">exit(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p>除了正在运行的域，可能还会有一些持久的、非活动的域配置存储在主机上。使用listDefinedDomains进行列举，因为不活跃的域没有任何ID标识符，所以会返回一个包含域名字的列表。出错会返回None，否则返回一个保存了name（string）的 Python 列表。   </p>
+<p>例4.5. 列出不活跃的域</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Example-5.py</span></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> libvirt</span><br><span class="line"></span><br><span class="line">conn = libvirt.open(<span class="string">'qemu:///system'</span>)</span><br><span class="line"><span class="keyword">if</span> conn == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to open connection to qemu:///system'</span>， file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">domainNames = conn.listDefinedDomains()</span><br><span class="line"><span class="keyword">if</span> conn == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to get a list of domain names'</span>， file=sys.stderr)</span><br><span class="line"></span><br><span class="line">domainIDs = conn.listDomainsID()</span><br><span class="line"><span class="keyword">if</span> domainIDs == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to get a list of domain IDs'</span>， file=sys.stderr)</span><br><span class="line"><span class="keyword">if</span> len(domainIDs) != <span class="number">0</span>:</span><br><span class="line">    <span class="keyword">for</span> domainID <span class="keyword">in</span> domainIDs:</span><br><span class="line">        domain = conn.lookupByID(domainID)</span><br><span class="line">        domainNames.append(domain.name)</span><br><span class="line"></span><br><span class="line">print(<span class="string">"All (active and inactive domain names:"</span>)</span><br><span class="line"><span class="keyword">if</span> len(domainNames) == <span class="number">0</span>:</span><br><span class="line">    print(<span class="string">'  None'</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="keyword">for</span> domainName <span class="keyword">in</span> domainNames:</span><br><span class="line">        print(<span class="string">'  '</span>+domainName)</span><br><span class="line"></span><br><span class="line">conn.close()</span><br><span class="line">exit(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p>以上这些列举域（Listing Domains）方法不直接返回 virDomain 对象，因为当频繁进行列举域操作是可能导致不必要性能损失。但是，Python libvirt模块提供了 listAllDomains 方法列举所有领域，包括活跃的和不活跃。它返回一个Python 列表，列表里保存了 virDomain 实例。发生错误时返回None。 这个列表以是空的，这是表示不存在任何持久化的域。  </p>
+<p>listAllDomains 方法需要一个参数，这个参数是一个过滤器。如果参数值是 0，表示所有域将列出。否则，下列任何一个或所有的常数可以加在一起来创建一个过滤器。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">VIR_CONNECT_LIST_DOMAINS_ACTIVE</span><br><span class="line">VIR_CONNECT_LIST_DOMAINS_INACTIVE</span><br><span class="line">VIR_CONNECT_LIST_DOMAINS_PERSISTENT</span><br><span class="line">VIR_CONNECT_LIST_DOMAINS_TRANSIENT</span><br><span class="line">VIR_CONNECT_LIST_DOMAINS_RUNNING</span><br><span class="line">VIR_CONNECT_LIST_DOMAINS_PAUSED</span><br><span class="line">VIR_CONNECT_LIST_DOMAINS_SHUTOFF</span><br><span class="line">VIR_CONNECT_LIST_DOMAINS_OTHER</span><br><span class="line">VIR_CONNECT_LIST_DOMAINS_MANAGEDSAVE</span><br><span class="line">VIR_CONNECT_LIST_DOMAINS_NO_MANAGEDSAVE</span><br><span class="line">VIR_CONNECT_LIST_DOMAINS_AUTOSTART</span><br><span class="line">VIR_CONNECT_LIST_DOMAINS_NO_AUTOSTART</span><br><span class="line">VIR_CONNECT_LIST_DOMAINS_HAS_SNAPSHOT</span><br><span class="line">VIR_CONNECT_LIST_DOMAINS_NO_SNAPSHOT</span><br></pre></td></tr></table></figure></p>
+<p>例4.6. 获取所有的域对象</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Example-6.py</span></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> libvirt</span><br><span class="line"></span><br><span class="line">conn = libvirt.open(<span class="string">'qemu:///system'</span>)</span><br><span class="line"><span class="keyword">if</span> conn == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to open connection to qemu:///system'</span>， file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">print(<span class="string">"All (active and inactive) domain names:"</span>)</span><br><span class="line">domains = conn.listAllDomains(<span class="number">0</span>)</span><br><span class="line"><span class="keyword">if</span> len(domains) != <span class="number">0</span>:</span><br><span class="line">    <span class="keyword">for</span> domain <span class="keyword">in</span> domains:</span><br><span class="line">        print(<span class="string">'  '</span>+domain.name())</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">'  None'</span>)</span><br><span class="line"></span><br><span class="line">conn.close()</span><br><span class="line">exit(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="4-3-获得域的状态信息"><a href="#4-3-获得域的状态信息" class="headerlink" title="4.3. 获得域的状态信息"></a>4.3. 获得域的状态信息</h2><p>待翻译</p>
+<p>一旦获得域实例,可以获取的信息域的状态。 信息,如操作系统的类型被托管,运行状态,ID、UUID等等。下面的方法将演示如何获取这些信息。  </p>
+<h3 id="4-3-1。-获取一个域的ID"><a href="#4-3-1。-获取一个域的ID" class="headerlink" title="4.3.1。 获取一个域的ID"></a>4.3.1。 获取一个域的ID</h3><hr>
+<h2 id="4-4-生命周期控制"><a href="#4-4-生命周期控制" class="headerlink" title="4.4. 生命周期控制"></a>4.4. 生命周期控制</h2><p>Libvirt可以控制guest域的整个生命周期。在域的整个生命周期中有一下几个阶段:  </p>
+<ul>
+<li><p>Undefined (未定义)： 这是最初的状态。guest域还未被定义或未创建。  </p>
+</li>
+<li><p>Defined (已定义): 客户域被定义但没有运行。这种状态也可以被描述为  Stopped(停止)。  </p>
+</li>
+<li><p>Running (运行中): 正在运行的客户域是已经定义和运行了的。  </p>
+</li>
+<li><p>Paused (暂停): 客户域处于暂停状态。他的内存映像已经暂时被存储，可以被恢复为 Running(运行中) 的状态。客户域的操作系统不会意识到曾经被暂停过。  </p>
+</li>
+<li><p>Saved (保存的): 保存状态的域都有其内存映像，把 暂停 状态的内存映像保存为永久的存储文件。它可以被恢复为 运行 状态，客户域的操作系统不会意识到曾经被暂停过。  </p>
+</li>
+</ul>
+<p>这些状态之间的转换可以分为几类:  </p>
+<ul>
+<li>4.4.1. “配置和启动”</li>
+<li>4.4.3. “暂停/恢复和保存/恢复”</li>
+<li>4.4.4. “迁移”</li>
+<li><p>4.4.5. “自动运行”</p>
+<p>​<br>客户域的生命周期转换图  </p>
+</li>
+</ul>
+<p><img src="/pictures/翻译-libvirt开发指南-python-4.0-1 guest-state-transition.png" alt="lifecycle"></p>
+<hr>
+<h3 id="4-4-1-配置和启动"><a href="#4-4-1-配置和启动" class="headerlink" title="4.4.1. 配置和启动"></a>4.4.1. 配置和启动</h3><p>配置是指在创建新客户域时，通常使用的某种形式的操作系统安装介质。有各种各样的方法可以使用，但要根据不同的Hypervisor管理程序和域的类型进行选择。常见的应用程序支持几种不同的配置方法。Starting（开始）是指在Hypervisor上执行一个配置好的域。  </p>
+<h4 id="4-4-1-1-配置方法"><a href="#4-4-1-1-配置方法" class="headerlink" title="4.4.1.1. 配置方法"></a>4.4.1.1. 配置方法</h4><p>有三种方法可以使用。  </p>
+<ul>
+<li><p><code>createXML</code> 方法将立即创建并启动一个新的临时客户域。当这个客户域关闭，所有的痕迹就会消失。 </p>
+</li>
+<li><p><code>defineXML</code> 方法将为一个永久性的（持久的）域存储配置文件。</p>
+</li>
+<li><p><code>create</code> 方法将根据配置文件引导之前定义好的域。</p>
+</li>
+<li><p><code>defineXML</code> 命令还可以用来把之前启动的临时客户域转换为持久域。  </p>
+</li>
+</ul>
+<h5 id="4-4-1-1-1-引导临时域"><a href="#4-4-1-1-1-引导临时域" class="headerlink" title="4.4.1.1.1. 引导临时域"></a>4.4.1.1.1. 引导临时域</h5><p>引导一个临时域，只需要一个连接、一个包含XML文档描述所需的客户机配置的字符串和一个控制启动的标志。  </p>
+<ul>
+<li><p>如果设置了VIR_DOMAIN_START_PAUSED标志，将启动域，但它的cpu会继续暂停。cpu后可以用<code>resume</code>方法启动。  </p>
+</li>
+<li><p>如果设置了VIR_DOMAIN_START_AUTODESTROY标志，当 virConnect 对象最终被释放时客户域将自动销毁。如果客户机崩溃或与libvirtd守护进程失去连接，也会自动小会。任何标记为自动销毁的域，将阻止迁移，保存到文件或快照。  </p>
+</li>
+</ul>
+<p>例4.22. 配置临时域</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Example-7.py</span></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> libvirt</span><br><span class="line"></span><br><span class="line">xmlconfig = <span class="string">'&lt;domain&gt;........&lt;/domain&gt;'</span></span><br><span class="line"></span><br><span class="line">conn = libvirt.open(<span class="string">'qemu:///system'</span>)</span><br><span class="line"><span class="keyword">if</span> conn == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to open connection to qemu:///system'</span>， file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">dom = conn.createXML(xmlconfig， <span class="number">0</span>)</span><br><span class="line"><span class="keyword">if</span> dom == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to create a domain from an XML definition.'</span>， file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">print(<span class="string">'Guest '</span>+dom.name()+<span class="string">' has booted'</span>， file=sys.stderr)</span><br><span class="line"></span><br><span class="line">conn.close()</span><br><span class="line">exit(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p>如果域创建成功了，返回 virDomain 实例.否则返回 None。 尽管域成功booted，但不保证域正在running。客户域有可能崩溃，这种情况下，试图返回 virDomain 对象时将发生一个错误，因为临时的客户域关闭(或崩溃)后不存在了。处理这种情况需要使用一个永久的客户域。  </p>
+<h5 id="4-4-1-1-2。-定义和引导一个永久性客户域"><a href="#4-4-1-1-2。-定义和引导一个永久性客户域" class="headerlink" title="4.4.1.1.2。 定义和引导一个永久性客户域"></a>4.4.1.1.2。 定义和引导一个永久性客户域</h5><p>在永久性域启动之前，必须先定义它的配置。引导一个永久性域需要一个连接和一个包含XML文档配置的字符串。 来自已经定义过得客户域的virDomain 对象，也可以用来引导一个新的客户域。  </p>
+<p>目前， defineDomain 方法定义了一个<code>flags</code>参数但是未被使用。该参数直接写<code>0</code>即可。以后的版本中有可能用到这个flag参数。  </p>
+<p>例4.23. 定义和引导一个永久性客户域<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Example-8.py</span></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> libvirt</span><br><span class="line"></span><br><span class="line">xmlconfig = <span class="string">'&lt;domain&gt;........&lt;/domain&gt;'</span></span><br><span class="line"></span><br><span class="line">conn = libvirt.open(<span class="string">'qemu:///system'</span>)</span><br><span class="line"><span class="keyword">if</span> conn == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to open connection to qemu:///system'</span>， file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">dom = conn.defineXML(xmlconfig， <span class="number">0</span>)</span><br><span class="line"><span class="keyword">if</span> dom == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to define a domain from an XML definition.'</span>， file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> dom.create(dom) &lt; <span class="number">0</span>:</span><br><span class="line">    print(<span class="string">'Can not boot guest domain.'</span>， file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">print(<span class="string">'Guest '</span>+dom.name()+<span class="string">' has booted'</span>， file=sys.stderr)</span><br><span class="line"></span><br><span class="line">conn.close()</span><br><span class="line">exit(<span class="number">0</span>)</span><br></pre></td></tr></table></figure></p>
+<h4 id="4-4-1-2-新的客户域配置技术"><a href="#4-4-1-2-新的客户域配置技术" class="headerlink" title="4.4.1.2. 新的客户域配置技术"></a>4.4.1.2. 新的客户域配置技术</h4><p>本节首先说明两个配置，这两个配置是可用的，可以对比着看。然后概述了第三种配置，用于特定的虚拟硬件，有一定的意义。为了说明目的，下面的例子将使用XML配置，设置一个KVM完全虚拟化的客户域，有一个磁盘、一个网络接口，一个使用VNC显示的视频卡。  </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">domain</span> <span class="attr">type</span>=<span class="string">'kvm'</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>demo<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">uuid</span>&gt;</span>c7a5fdbd-cdaf-9455-926a-d65c16db1809<span class="tag">&lt;/<span class="name">uuid</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">memory</span>&gt;</span>500000<span class="tag">&lt;/<span class="name">memory</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">vcpu</span>&gt;</span>1<span class="tag">&lt;/<span class="name">vcpu</span>&gt;</span></span><br><span class="line">  .... the <span class="tag">&lt;<span class="name">os</span>&gt;</span> block will vary per approach ...</span><br><span class="line">  <span class="tag">&lt;<span class="name">clock</span> <span class="attr">offset</span>=<span class="string">'utc'</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">on_poweroff</span>&gt;</span>destroy<span class="tag">&lt;/<span class="name">on_poweroff</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">on_reboot</span>&gt;</span>restart<span class="tag">&lt;/<span class="name">on_reboot</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">on_crash</span>&gt;</span>destroy<span class="tag">&lt;/<span class="name">on_crash</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">devices</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">emulator</span>&gt;</span>/usr/bin/qemu-kvm<span class="tag">&lt;/<span class="name">emulator</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">disk</span> <span class="attr">type</span>=<span class="string">'file'</span> <span class="attr">device</span>=<span class="string">'disk'</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">source</span> <span class="attr">file</span>=<span class="string">'/var/lib/libvirt/images/demo.img'</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">driver</span> <span class="attr">name</span>=<span class="string">'qemu'</span> <span class="attr">type</span>=<span class="string">'raw'</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">target</span> <span class="attr">dev</span>=<span class="string">'hda'</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">disk</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">interface</span> <span class="attr">type</span>=<span class="string">'bridge'</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">mac</span> <span class="attr">address</span>=<span class="string">'52:54:00:d8:65:c9'</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">source</span> <span class="attr">bridge</span>=<span class="string">'br0'</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">interface</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">'mouse'</span> <span class="attr">bus</span>=<span class="string">'ps2'</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">graphics</span> <span class="attr">type</span>=<span class="string">'vnc'</span> <span class="attr">port</span>=<span class="string">'-1'</span> <span class="attr">listen</span>=<span class="string">'127.0.0.1'</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">devices</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">domain</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>！！！！重要提醒！！！！</strong>  </p>
+<p>注意初始内存的分配，过低可能会导致崩溃和安装失败。有些操作系统初始安装是需要高达<code>600 MB</code>内存，虽然运行时会减少。  </p>
+<h5 id="4-4-1-2-1-CDROM-ISO镜像配置"><a href="#4-4-1-2-1-CDROM-ISO镜像配置" class="headerlink" title="4.4.1.2.1. CDROM / ISO镜像配置"></a>4.4.1.2.1. CDROM / ISO镜像配置</h5><p>所有的<em>全虚拟化技术</em>支持模拟CDROM设备。<em>半虚拟化技术</em>很难有支持模拟CDROM设备的。  </p>
+<p>改变XML配置：  </p>
+<ol>
+<li>添加一个CDROM设备来支持光盘安装。客户域的CDROM设备可以是主机CDROM设备，或一个ISO镜像文件。  </li>
+<li>确定BIOS启动顺序应该是什么，有两个可能的选择。如果硬盘写在在CDROM前，cdrom不会被启动，除非第一硬盘引导扇区是空白的。如果CDROM写在硬盘前，那么在安装后需要改变客户域的配置从硬盘引导。虽然两种都可以工作，但是第一种是最容易的。  </li>
+</ol>
+<p>上面的xml配置文件需要插入下面的内容:  </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">os</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">type</span> <span class="attr">arch</span>=<span class="string">'x86_64'</span> <span class="attr">machine</span>=<span class="string">'pc'</span>&gt;</span>hvm<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">boot</span> <span class="attr">dev</span>=<span class="string">'hd'</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">boot</span> <span class="attr">dev</span>=<span class="string">'cdrom'</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">os</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这个硬盘的引导扇区最初是空的，所以第一次引导失败，然后会从CD-ROM引导。那么还需要一个CD-ROM设备。  </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">disk</span> <span class="attr">type</span>=<span class="string">'file'</span> <span class="attr">device</span>=<span class="string">'cdrom'</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">file</span>=<span class="string">'/var/lib/libvirt/images/rhel5-x86_64-dvd.iso'</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">target</span> <span class="attr">dev</span>=<span class="string">'hdc'</span> <span class="attr">bus</span>=<span class="string">'ide'</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">disk</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>确定要使用的配置，现在可以来创建客户域了。这个很简单，只需要一个定义好的持久的客户域，然后引导boot。</p>
+<p>例4.24. 定义和引导一个永久性客户域<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Example-12.py</span></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> libvirt</span><br><span class="line"></span><br><span class="line">xmlconfig = <span class="string">'&lt;domain&gt;........&lt;/domain&gt;'</span></span><br><span class="line"></span><br><span class="line">conn = libvirt.open(<span class="string">'qemu:///system'</span>)</span><br><span class="line"><span class="keyword">if</span> conn == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to open connection to qemu:///system'</span>， file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">dom = conn.defineXML(xmlconfig， <span class="number">0</span>)</span><br><span class="line"><span class="keyword">if</span> dom == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to define a domain from an XML definition.'</span>， file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> dom.create(dom) &lt; <span class="number">0</span>:</span><br><span class="line">    print(<span class="string">'Can not boot guest domain.'</span>， file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">print(<span class="string">'Guest '</span>+dom.name()+<span class="string">' has booted'</span>， file=sys.stderr)</span><br><span class="line"></span><br><span class="line">conn.close()</span><br><span class="line">exit(<span class="number">0</span>)</span><br></pre></td></tr></table></figure></p>
+<p>如果不能保证硬盘的引导扇区是空白的，那么配置将是两步的过程。第一次临时客户域引导使用cd-rom驱动器作为主要的启动设备。一旦完成后，一个持久性配置的域将会从硬盘启动。  </p>
+<p>除了 <code>defineXML</code> 方法，另一种方法 <code>defineXMLFlags</code> 也是可用的。</p>
+<h5 id="4-4-1-2-2-PXE启动配置"><a href="#4-4-1-2-2-PXE启动配置" class="headerlink" title="4.4.1.2.2. PXE启动配置"></a>4.4.1.2.2. PXE启动配置</h5><p>一些新的完全虚拟化技术提供一个BIOS，能够使用PXE启动协议启动。如果一个环境已经有了PXE启动配置服务器部署，这是一个可取的方法。  </p>
+<p>更改配置：</p>
+<ol>
+<li>显然使用PXE引导要求有一个网络设备。这个网卡连接的局域网，也需要一个PXE / TFTP服务器。  </li>
+<li>确定BIOS启动顺序应该是什么，有两个可能的选择。 如果硬盘写在网络设备前，网卡不会PXE启动，除非第一个硬盘引导扇区是空白的。如果网络设备出现在硬盘前，那么在安装后需要改变客户域的配置从硬盘引导。虽然两种都可以工作，但是第一种是最容易的。    </li>
+</ol>
+<p>最初的xml配置文件需要插入下面的内容:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">os</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">type</span> <span class="attr">arch</span>=<span class="string">'x86_64'</span> <span class="attr">machine</span>=<span class="string">'pc'</span>&gt;</span>hvm<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">boot</span> <span class="attr">dev</span>=<span class="string">'hd'</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">boot</span> <span class="attr">dev</span>=<span class="string">'network'</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">os</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>这个硬盘的引导扇区最初是空的，所以第一次引导失败，然后会从NIC网卡引导。确定要使用的配置，现在可以来创建客户域了。这个很简单，只需要一个定义好的持久的客户域，然后引导boot。</p>
+<p>例4.25. PXE启动<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Example-14.py</span></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> libvirt</span><br><span class="line"></span><br><span class="line">xmlconfig = <span class="string">'&lt;domain&gt;........&lt;/domain&gt;'</span></span><br><span class="line"></span><br><span class="line">conn = libvirt.open(<span class="string">'qemu:///system'</span>)</span><br><span class="line"><span class="keyword">if</span> conn == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to open connection to qemu:///system'</span>， file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">dom = conn.defineXML(xmlconfig， <span class="number">0</span>)</span><br><span class="line"><span class="keyword">if</span> dom == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to define a domain from an XML definition.'</span>， file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> dom.create(dom) &lt; <span class="number">0</span>:</span><br><span class="line">    print(<span class="string">'Can not boot guest domain.'</span>， file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">print(<span class="string">'Guest '</span>+dom.name()+<span class="string">' has booted'</span>， file=sys.stderr)</span><br><span class="line"></span><br><span class="line">conn.close()</span><br><span class="line">exit(<span class="number">0</span>)</span><br></pre></td></tr></table></figure></p>
+<p>如果不能保证硬盘的引导扇区是空白的，那么配置将是两步的过程。第一次临时客户域引导使用NIC网络作为主要的启动设备。一旦完成后，一个持久性配置的域将会从硬盘启动。  </p>
+<h5 id="4-4-1-2-3-直接内核引导配置Direct-Kernel-Boot-Provisioning"><a href="#4-4-1-2-3-直接内核引导配置Direct-Kernel-Boot-Provisioning" class="headerlink" title="4.4.1.2.3. 直接内核引导配置Direct Kernel Boot Provisioning"></a>4.4.1.2.3. 直接内核引导配置Direct Kernel Boot Provisioning</h5><p>目前并不关系这部分，留着以后翻译吧。上原文！！</p>
+<p>Paravirtualization technologies emulate a fairly restrictive set of hardware， often making it impossible to use the provisioning options just outlined. For such scenarios it is often possible to boot a new guest domain directly from an kernel and initrd image stored on the host file system. This has one interesting advantage， which is that it is possible to directly set kernel command line boot arguments， making it very easy to do fully automated installation. This advantage can be compelling enough that this technique is used even for fully virtualized guest domains with CD-ROM drive/PXE support.  </p>
+<p>The one complication with direct kernel booting is that provisioning becomes a two step process. For the first step， it is necessary to configure the guest XML configuration to point to a kernel/initrd.  </p>
+<p>Example 4.26. Kernel Boot Provisioning XML<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">os</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">type</span> <span class="attr">arch</span>=<span class="string">'x86_64'</span> <span class="attr">machine</span>=<span class="string">'pc'</span>&gt;</span>hvm<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">kernel</span>&gt;</span>/var/lib/libvirt/boot/f11-x86_64-vmlinuz<span class="tag">&lt;/<span class="name">kernel</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">initrd</span>&gt;</span>/var/lib/libvirt/boot/f11-x86_64-initrd.img<span class="tag">&lt;/<span class="name">initrd</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">cmdline</span>&gt;</span>method=http://download.fedoraproject.org/pub/fedora/linux/releases/11/x86_64/os console=ttyS0 console=tty<span class="tag">&lt;/<span class="name">cmdline</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">os</span>&gt;</span></span><br><span class="line">​```xml</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Notice how the kernel command line provides the URL of download site containing the distro install tree matching the kernel/initrd. This allows the installer to automatically download all its resources without prompting the user for install URL. It could also be used to provide a kickstart file for completely unattended installation. Finally， this command line also tells the kernel to activate both the first serial port and the VGA card as consoles， with the latter being the default. Having kernel messages duplicated on the serial port in this manner can be a useful debugging avenue. Of course valid command line arguments vary according to the particular kernel being booted. Consult the kernel vendor/distributor's documentation for valid options.  </span><br><span class="line"></span><br><span class="line">The last XML configuration detail before starting the guest， is to change the 'on_reboot' element action to be 'destroy'. This ensures that when the guest installer finishes and requests a reboot， the guest is instead powered off. This allows the management application to change the configuration to make it boot off， just installed， the hard disk again. The provisioning process can be started now by creating a transient guest with the first XML configuration  </span><br><span class="line"> </span><br><span class="line">Example 4.27. Kernel Boot Provisioning</span><br><span class="line">​```python</span><br><span class="line"># Example-14.py</span><br><span class="line">from __future__ import print_function</span><br><span class="line">import sys</span><br><span class="line">import libvirt</span><br><span class="line"></span><br><span class="line">xmlconfig = '<span class="tag">&lt;<span class="name">domain</span>&gt;</span>........<span class="tag">&lt;/<span class="name">domain</span>&gt;</span>'</span><br><span class="line"></span><br><span class="line">conn = libvirt.open('qemu:///system')</span><br><span class="line">if conn == None:</span><br><span class="line">    print('Failed to open connection to qemu:///system'， file=sys.stderr)</span><br><span class="line">    exit(1)</span><br><span class="line"></span><br><span class="line">dom = conn.createXML(xmlconfig， 0)</span><br><span class="line">if dom == None:</span><br><span class="line">    print('Unable to boot transient guest configuration.'， file=sys.stderr)</span><br><span class="line">    exit(1)</span><br><span class="line"></span><br><span class="line">print('Guest '+dom.name()+' has booted'， file=sys.stderr)</span><br><span class="line"></span><br><span class="line">conn.close()</span><br><span class="line">exit(0)</span><br></pre></td></tr></table></figure></p>
+<p>Once this guest shuts down， the second phase of the provisioning process can be started. For this phase， the ‘OS’ element will have the kernel/initrd/cmdline elements removed， and replaced by either a reference to a host side bootloader， or a BIOS boot setup. The former is used for Xen paravirtualized guests， while the latter is used for fully virtualized guests.  </p>
+<p>The phase 2 configuration for a Xen paravirtualized guest would thus look like:  </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bootloader</span>&gt;</span>/usr/bin/pygrub<span class="tag">&lt;/<span class="name">bootloader</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">os</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">type</span> <span class="attr">arch</span>=<span class="string">'x86_64'</span> <span class="attr">machine</span>=<span class="string">'pc'</span>&gt;</span>xen<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">os</span>&gt;</span></span><br><span class="line">while a fully-virtualized guest would use:</span><br><span class="line"><span class="tag">&lt;<span class="name">bootloader</span>&gt;</span>/usr/bin/pygrub<span class="tag">&lt;/<span class="name">bootloader</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">os</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">type</span> <span class="attr">arch</span>=<span class="string">'x86_64'</span> <span class="attr">machine</span>=<span class="string">'pc'</span>&gt;</span>hvm<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">boot</span> <span class="attr">dev</span>=<span class="string">'hd'</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">os</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>With the second phase configuration determined， the guest can be recreated， this time using a persistent configuration  </p>
+<p>Example 4.28. Kernel Boot Provisioning for a Persistent Guest Domain</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Example-18.py</span></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> libvirt</span><br><span class="line"></span><br><span class="line">xmlconfig = <span class="string">'&lt;domain&gt;........&lt;/domain&gt;'</span></span><br><span class="line"></span><br><span class="line">conn = libvirt.open(<span class="string">'qemu:///system'</span>)</span><br><span class="line"><span class="keyword">if</span> conn == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to open connection to qemu:///system'</span>， file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">dom = conn.createXML(xmlconfig， <span class="number">0</span>)</span><br><span class="line"><span class="keyword">if</span> dom == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Unable to define persistent guest configuration.'</span>， file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> dom.create(dom) &lt; <span class="number">0</span>:</span><br><span class="line">    print(<span class="string">'Can not boot guest domain.'</span>， file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">print(<span class="string">'Guest '</span>+dom.name()+<span class="string">' has booted'</span>， file=sys.stderr)</span><br><span class="line"></span><br><span class="line">conn.close()</span><br><span class="line">exit(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p>In addition to the createXML method， the alternative method createXMLFlags is available.  </p>
+<hr>
+<h3 id="4-4-2-停止Stopping"><a href="#4-4-2-停止Stopping" class="headerlink" title="4.4.2. 停止Stopping"></a>4.4.2. 停止Stopping</h3><p>Stopping停止就是指停止正在运行的客户域。有两种方法：shutdown(关机)和destroy(销毁)。  </p>
+<ul>
+<li><p><code>shutdown</code>方法是一个clean（正统的？）的停止过程，它将发送一个信号给客户域的操作系统要求其立即关闭。操作系统成功关闭后客户域才会停止。<code>shutdown</code>过程类似于物理机器上运行的shutdown命令。</p>
+</li>
+<li><p><code>shutdownFlags</code> 方法也可以关闭域，取决于客户域的操作系统是否支持。  </p>
+</li>
+</ul>
+<p><code>destroy</code>和 <code>destroyFlags</code> 方法会立即终止客户域。这个过程类似拔下物理机器的电源。</p>
+<hr>
+<h3 id="4-4-3-“暂停-恢复”-和-“保存-恢复”-Suspend-Resume-and-Save-Restore"><a href="#4-4-3-“暂停-恢复”-和-“保存-恢复”-Suspend-Resume-and-Save-Restore" class="headerlink" title="4.4.3. “暂停/恢复” 和 “保存/恢复” (Suspend/Resume and Save/Restore)"></a>4.4.3. “暂停/恢复” 和 “保存/恢复” (Suspend/Resume and Save/Restore)</h3><p><code>suspend</code> 和 <code>resume</code> 方法指暂停正在运行的客户域，暂时保存它的内存状态。过一会儿，有可能恢复到原来的运行状态，继续执行暂停前的任务。暂停不保存一个永久性客户域的内存映像（干这个事儿得用<code>save</code>）。  </p>
+<p><code>save</code>和<code>restore</code>方法是指暂停正在运行的客户域，保存它的内存状态到一个文件中。 在一段时间后，可以恢复到原来的运行状态，继续执行暂停前的任务。  </p>
+<p>重要的是要注意，<code>save/restore</code>只有保存的内存状态，不保存存储状态。因此当客户域恢复后，底层存储必须完全与最初保存时的状态相同。基本用法就是客户域只能从任何给定的保存的状态镜像恢复一次。要想让客户域从同一个保存的状态镜像恢复多次，应用程序必须在saving时保存客户域的存储快照，恢复时明确的回到这个存储快照。未来的libvirt将允许自动快照功能可以保存内存和存储状态。  </p>
+<p>保存操作需要保存内存状态的文件的绝对了就。这个filename文件名在虚拟机监控程序的文件系统，而不是libvirt客户机应用程序。如果管理当地的管理程序，两者没有区别。但如果通过网络远程连接到一个系统管理程序，它是至关重要的。下面的例子演示了保存一个客户域叫“demo-guest”到一个文件。 它会检查确认客人在保存之前是运行的，尽管这在技术上是冗余的，因为管理程序驱动程序将做这样的检查。</p>
+<p>例4.29. 保存客户域  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#原示例不能运行，修改后如下：</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> libvirt</span><br><span class="line"></span><br><span class="line">filepath = <span class="string">'/kvm-image/save/'</span></span><br><span class="line">domainname = <span class="string">'demo-1661351656820'</span></span><br><span class="line">filename = domainname +<span class="string">'.img'</span></span><br><span class="line"></span><br><span class="line">conn = libvirt.open(<span class="string">'qemu:///system'</span>)</span><br><span class="line"><span class="keyword">if</span> conn == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to open connection to qemu:///system'</span> ,file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line">    </span><br><span class="line">dom = conn.lookupByName( domainname )</span><br><span class="line"><span class="keyword">if</span> dom == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Cannot find guest to be saved.'</span> ,file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line">        </span><br><span class="line">info = dom.info()<span class="comment">#info &#123;state, maxmem, mem, cpus, cput&#125;</span></span><br><span class="line"><span class="keyword">if</span> info == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Cannot check guest state'</span>, file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> info[<span class="number">0</span>] == libvirt.VIR_DOMAIN_SHUTOFF:</span><br><span class="line">    print(<span class="string">'Not saving guest that is not running'</span>, file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> dom.save(filepath + filename) &lt; <span class="number">0</span>:</span><br><span class="line">    print(<span class="string">'Unable to save guest to '</span>+filepath + filename, file=sys.stderr)</span><br><span class="line">    </span><br><span class="line">print(<span class="string">'Guest state saved to '</span>+filepath + filename, file=sys.stderr)</span><br><span class="line"></span><br><span class="line">conn.close()</span><br><span class="line">exit(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p>save客户域需要一小段时间，执行完毕，保存的客户域会暂停。然后，可以使用保存的状态文件重启它，使用restore方法。如果客人已经运行管理程序驱动程序将返回一个错误。但是，它不会阻止试图从相同的状态文件恢复多次。 如前所述，它是应用程序的责任，以确保客户存储与saving保存镜像时是完全相同的状态。  </p>
+<p>此外， <code>saveFlags</code> 方法允许保存并同时修改配置( the saveFlags methods allows the domain to be save and at the same alter the configuration of the saved image.)。当域恢复时，新的配置将被应用。  </p>
+<p>还有另一种方法来保存一个域。使用 <code>managedSave</code> 方法也可以保存运行域状态，只有在这种情况下，由系统自动选择保存镜像的位置。此外，the domain will be restored to the save state when the domain is restarted.</p>
+<p>例4.30. 恢复一个客户域</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Example-21.py</span></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> libvirt</span><br><span class="line"></span><br><span class="line">filename = <span class="string">'/var/lib/libvirt/save/demo-guest.img'</span></span><br><span class="line"></span><br><span class="line">conn = libvirt.open(<span class="string">'qemu:///system'</span>)</span><br><span class="line"><span class="keyword">if</span> conn == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to open connection to qemu:///system'</span>， file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> id = conn.restore(filename)) &lt; <span class="number">0</span>:</span><br><span class="line">    print(<span class="string">'Unable to restore guest from '</span>+filename， file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">dom = conn.lookupByID(id);</span><br><span class="line"><span class="keyword">if</span> dom == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Cannot find guest that was restored'</span>， file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">print(<span class="string">'Guest state restored from '</span>+filename， file=sys.stderr)</span><br><span class="line"></span><br><span class="line">conn.close()</span><br><span class="line">exit(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p><strong>！！！注意！！！</strong><br>恢复一个客人域后不更新域当前的日期/时间<br>当客户域恢复到它保存是的状态。这包括了日期和时间。客户域无法确定已经过去了多久，因为它被save了。这意味着当前时间不会自动更新无论在恢复操作之中或之后。</p>
+<p>除了 <code>restore</code>方法，另一种方法 <code>restoreFlags</code> 也是可用的。</p>
+<hr>
+<h3 id="4-4-4-迁移-Migration"><a href="#4-4-4-迁移-Migration" class="headerlink" title="4.4.4  迁移 Migration"></a>4.4.4  迁移 Migration</h3><p>迁移是将客户域的镜像移动到某个地方，通常从一个系统管理程序Hypervisor到另一个节点的一个Hypervisor。有两种方法进行迁移。<code>migrate</code>方法需要一个程序建立连接，并连接到要迁移的目的节点。<code>migrateToUri</code>方法接受URI指定的一个连接，打开连接，然后通过指令将域迁移到这个连接。<br>这两个方法都传递一个参数来指定动态迁移。迁移成功完成，需要在源和目标之间共享存储。  </p>
+<p><code>migrate</code>方法的第一个参数指定了到迁移目标的连接。这个参数是必需的。  </p>
+<p><code>migrate</code>方法的第二个参数指定一组标记，控制如何迁移。如果不需要标记参数则应设置为0。 </p>
+<p>标识列表：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">VIR_MIGRATE_LIVE</span><br><span class="line">VIR_MIGRATE_PEER2PEER</span><br><span class="line">VIR_MIGRATE_TUNNELLED</span><br><span class="line">VIR_MIGRATE_PERSIST_DEST</span><br><span class="line">VIR_MIGRATE_UNDEFINE_SOURCE</span><br><span class="line">VIR_MIGRATE_PAUSED</span><br><span class="line">VIR_MIGRATE_NON_SHARED_DISK</span><br><span class="line">VIR_MIGRATE_NON_SHARED_INC</span><br><span class="line">VIR_MIGRATE_CHANGE_PROTECTION</span><br><span class="line">VIR_MIGRATE_UNSAFE</span><br><span class="line">VIR_MIGRATE_OFFLINE</span><br></pre></td></tr></table></figure>
+<p><code>migrate</code>方法的第三个参数指定一个新名称。并不是所有的虚拟机监控程序Hypervisor都支持这种操作。如果不需要重命名域的话，参数应该设置为None。  </p>
+<p><code>migrate</code>方法的第四个参数指定URI定位迁移的目标。当目标系统上有多个Hypervisor时，URI是必须的。如果只有一个Hypervisor，参数可以设置为None。  </p>
+<p><code>migrate</code>方法第五个（最后一个参数）指定可以最大使用的带宽(MiB/s)。如果不需要限制那么将参数设置为0。  </p>
+<p>使用 <code>migrate</code> 方法将客户域迁移到一个已经打开的连接。例子:  </p>
+<p>例4.31. 一个域迁移到一个开放的连接</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Example-22.py</span></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> libvirt</span><br><span class="line"></span><br><span class="line">domName = <span class="string">'Fedora22-x86_64-1'</span></span><br><span class="line"></span><br><span class="line">conn = libvirt.open(<span class="string">'qemu:///system'</span>)</span><br><span class="line"><span class="keyword">if</span> conn == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to open connection to qemu:///system'</span>, file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">dest_conn = libvirt.open(<span class="string">'qemu+ssh://desthost/system'</span>)</span><br><span class="line"><span class="keyword">if</span> conn == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to open connection to qemu+ssh://desthost/system'</span>, file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">dom = conn.lookupByName(domName)</span><br><span class="line"><span class="keyword">if</span> dom == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to find the domain '</span>+domName, file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">new_dom = dom.migrate(dest_conn, <span class="number">0</span>, <span class="keyword">None</span>, <span class="keyword">None</span>, <span class="number">0</span>)</span><br><span class="line"><span class="keyword">if</span> new_dom == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Could not migrate to the new domain'</span>, file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">print(<span class="string">'Domain was migrated successfully.'</span>, file=sys.stderr)</span><br><span class="line"></span><br><span class="line">destconn.close()</span><br><span class="line">conn.close()</span><br><span class="line">exit(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p><code>migrateToURI</code> 方法与<code>migrate</code>是相似的，除了第一个参数是目标URI，而不是一个现有的连接。  </p>
+<p>使用 <code>migrateToURI</code> 方法将客户域迁移到一个已经打开的连接。例子:</p>
+<p>例4.32. 一个域迁移到一个开放的连接  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Example-23.py</span></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> libvirt</span><br><span class="line"></span><br><span class="line">domName = <span class="string">'Fedora22-x86_64-1'</span></span><br><span class="line"></span><br><span class="line">conn = libvirt.open(<span class="string">'qemu:///system'</span>)</span><br><span class="line"><span class="keyword">if</span> conn == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to open connection to qemu:///system'</span>, file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">dom = conn.lookupByName(domName)</span><br><span class="line"><span class="keyword">if</span> dom == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to find the domain '</span>+domName, file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">new_dom = dom.migrateToURI(<span class="string">'qemu+ssh://desthost/system'</span>, <span class="number">0</span>, <span class="keyword">None</span>, <span class="number">0</span>)</span><br><span class="line"><span class="keyword">if</span> new_dom == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Could not migrate to the new domain'</span>, file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">print(<span class="string">'Domain was migrated successfully.'</span>, file=sys.stderr)</span><br><span class="line"></span><br><span class="line">conn.close()</span><br><span class="line">exit(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p>住客人域迁移到一个URI使用 migrate 或者是 migrateToURI ，flag是 VIR_MIGRATE_LIVE 。例子:  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Example-24.py</span></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> libvirt</span><br><span class="line"></span><br><span class="line">domName = <span class="string">'Fedora22-x86_64-1'</span></span><br><span class="line"></span><br><span class="line">conn = libvirt.open(<span class="string">'qemu:///system'</span>)</span><br><span class="line"><span class="keyword">if</span> conn == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to open connection to qemu:///system'</span>, file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">dest_conn = libvirt.open(<span class="string">'qemu+ssh://desthost/system'</span>)</span><br><span class="line"><span class="keyword">if</span> conn == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to open connection to qemu+ssh://desthost/system'</span>, file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">dom = conn.lookupByID(<span class="number">6</span>)</span><br><span class="line"><span class="keyword">if</span> dom == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to find the domain '</span>+domName, file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">new_dom = dom.migrate(dest_conn, libvirt.VIR_MIGRATE_LIVE, <span class="keyword">None</span>, <span class="keyword">None</span>, <span class="number">0</span>)</span><br><span class="line"><span class="keyword">if</span> new_dom == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Could not migrate to the new domain'</span>, file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">print(<span class="string">'Domain was migrated successfully.'</span>, file=sys.stderr)</span><br><span class="line"></span><br><span class="line">destconn.close()</span><br><span class="line">conn.close()</span><br><span class="line">exit(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p>除了 migrate 方法，还有 migrate2 ， migrate3 ， migrateToURI ， migrateToURI2 ， migrateToURI3 方法可以使用，针对不同种类的连接。</p>
+<hr>
+<h3 id="4-4-5-自动运行-Autostart"><a href="#4-4-5-自动运行-Autostart" class="headerlink" title="4.4.5. 自动运行 Autostart"></a>4.4.5. 自动运行 Autostart</h3><p>客户域可以配置为自动运行。libvirt重启时，客户域将自动恢复。这是由一个API实现保存和恢复，路径无需用户输入。<code>dom.setAutostart(1)</code>  </p>
+<p>例4.34. 为域设置自动启动  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Example-25.py</span></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> libvirt</span><br><span class="line"></span><br><span class="line">domName = <span class="string">'Fedora22-x86_64-1'</span></span><br><span class="line"></span><br><span class="line">conn = libvirt.open(<span class="string">'qemu:///system'</span>)</span><br><span class="line"><span class="keyword">if</span> conn == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to open connection to qemu:///system'</span>, file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">dom = conn.lookupByID(<span class="number">6</span>)</span><br><span class="line"><span class="keyword">if</span> dom == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to find the domain '</span>+domName, file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">dom.setAutostart(<span class="number">1</span>)  <span class="comment"># turn on autostart</span></span><br><span class="line"></span><br><span class="line">conn.close()</span><br><span class="line">exit(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="4-5-域配置"><a href="#4-5-域配置" class="headerlink" title="4.5. 域配置"></a>4.5. 域配置</h2><p>libvirt使用XML定义域。一切与域相关的，比如内存和CPU，都是在XML中定义的。在XML格式可以参考：<a href="http://libvirt.org/formatdomain.html" target="_blank" rel="noopener">http://libvirt.org/formatdomain.html</a> 。如果您的系统 libvirt-devel 包已安装，也可以在本地访问 /usr/share/doc/libvirt-devel-version / 。  </p>
+<hr>
+<h3 id="4-5-1-引导模式"><a href="#4-5-1-引导模式" class="headerlink" title="4.5.1. 引导模式"></a>4.5.1. 引导模式</h3><p>通过BIOS启动，可以使虚拟机监控程序（Hypervisor）支持完全虚拟化功能。在这种情况下，BIOS有启动顺序优先级(软盘、硬盘、光盘、网络)决定在哪里获得/找到引导的镜像(image)。<br>例4.35. 设置引导模式<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">os</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">type</span>&gt;</span>hvm<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">loader</span> <span class="attr">readonly</span>=<span class="string">'yes'</span> <span class="attr">type</span>=<span class="string">'rom'</span>&gt;</span>/usr/lib/xen/boot/hvmloader<span class="tag">&lt;/<span class="name">loader</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">nvram</span> <span class="attr">template</span>=<span class="string">'/usr/share/OVMF/OVMF_VARS.fd'</span>&gt;</span>/var/lib/libvirt/nvram/guest_VARS.fd<span class="tag">&lt;/<span class="name">nvram</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">boot</span> <span class="attr">dev</span>=<span class="string">'hd'</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">boot</span> <span class="attr">dev</span>=<span class="string">'cdrom'</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">bootmenu</span> <span class="attr">enable</span>=<span class="string">'yes'</span> <span class="attr">timeout</span>=<span class="string">'3000'</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">smbios</span> <span class="attr">mode</span>=<span class="string">'sysinfo'</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">bios</span> <span class="attr">useserial</span>=<span class="string">'yes'</span> <span class="attr">rebootTimeout</span>=<span class="string">'0'</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">os</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<hr>
+<h3 id="4-5-2-内存-CPU资源"><a href="#4-5-2-内存-CPU资源" class="headerlink" title="4.5.2. 内存/ CPU资源"></a>4.5.2. 内存/ CPU资源</h3><p>CPU和内存资源，可以在域被创建时定义，或者在域活跃或不活跃时动态的定义。  </p>
+<p>CPU资源是在创建域的XML文件中使用xml标记定义的。Hypervisor定义了一个最大限制的数量。这个最大的限制可以依赖的资源和管理程序的限制。<br>CPU XML规范的一个示例。  </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">domain</span>&gt;</span></span><br><span class="line">  ...</span><br><span class="line">  <span class="tag">&lt;<span class="name">vcpu</span> <span class="attr">placement</span>=<span class="string">'static'</span> <span class="attr">cpuset</span>=<span class="string">"1-4,^3,6"</span> <span class="attr">current</span>=<span class="string">"1"</span>&gt;</span>2<span class="tag">&lt;/<span class="name">vcpu</span>&gt;</span></span><br><span class="line">  ...</span><br><span class="line"><span class="tag">&lt;/<span class="name">domain</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>内存资源是在创建域的XML文件中使用xml标记定义的。 最大和当前分配的内存域应该设置内存的一个示例XML规范遵循。  </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">domain</span>&gt;</span></span><br><span class="line">  ...</span><br><span class="line">  <span class="tag">&lt;<span class="name">maxMemory</span> <span class="attr">slots</span>=<span class="string">'16'</span> <span class="attr">unit</span>=<span class="string">'KiB'</span>&gt;</span>1524288<span class="tag">&lt;/<span class="name">maxMemory</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">memory</span> <span class="attr">unit</span>=<span class="string">'KiB'</span>&gt;</span>524288<span class="tag">&lt;/<span class="name">memory</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">currentMemory</span> <span class="attr">unit</span>=<span class="string">'KiB'</span>&gt;</span>524288<span class="tag">&lt;/<span class="name">currentMemory</span>&gt;</span></span><br><span class="line">  ...</span><br><span class="line"><span class="tag">&lt;/<span class="name">domain</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>域创建后，虚拟cpu数量可以通过 <code>setVcpus()</code> 或者<code>setVcpusFlags()</code>方法增加。cpu数量不得超过Hypervisor的最大限制。  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Example-29.py</span></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> libvirt</span><br><span class="line"></span><br><span class="line">domName = <span class="string">'Fedora22-x86_64-1'</span></span><br><span class="line"></span><br><span class="line">conn = libvirt.open(<span class="string">'qemu:///system'</span>)</span><br><span class="line"><span class="keyword">if</span> conn == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to open connection to qemu:///system'</span>, file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">dom = conn.lookupByID(<span class="number">6</span>)</span><br><span class="line"><span class="keyword">if</span> dom == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to find the domain '</span>+domName, file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">dom.setVcpus(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">conn.close()</span><br><span class="line">exit(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p>例4.36. 设置域的最大虚拟cpu的数量  </p>
+<p>域创建后，内存可以通过 <code>setMemory</code> 或者是 <code>setMemoryFlags</code> 方法更改。内存数量应该用字节表示。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Example-30.py</span></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> libvirt</span><br><span class="line"></span><br><span class="line">domName = <span class="string">'Fedora22-x86_64-1'</span></span><br><span class="line"></span><br><span class="line">conn = libvirt.open(<span class="string">'qemu:///system'</span>)</span><br><span class="line"><span class="keyword">if</span> conn == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to open connection to qemu:///system'</span>, file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">dom = conn.lookupByID(<span class="number">6</span>)</span><br><span class="line"><span class="keyword">if</span> dom == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to find the domain '</span>+domName, file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">dom.setMemory(<span class="number">4096</span>) <span class="comment"># 4 GigaBytes</span></span><br><span class="line"></span><br><span class="line">conn.close()</span><br><span class="line">exit(<span class="number">0</span>)</span><br></pre></td></tr></table></figure></p>
+<p>例4.37. 为一个域设置的内存量  </p>
+<p>除了 setMemory 方法,另一种方法 setMemoryFlags 也可用。</p>
+<hr>
+<h2 id="4-6-监控性能"><a href="#4-6-监控性能" class="headerlink" title="4.6. 监控性能"></a>4.6. 监控性能</h2><p>统计指标可用于监测域的资源利用率，vcpu，内存，块设备和网络。  </p>
+<h3 id="4-6-1-域块设备性能"><a href="#4-6-1-域块设备性能" class="headerlink" title="4.6.1. 域块设备性能"></a>4.6.1. 域块设备性能</h3><p>获得磁盘的使用情况的统计数据，使用 <code>blockStats</code> 方法:  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Example-31.py</span></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> libvirt</span><br><span class="line"></span><br><span class="line">domName = <span class="string">'Fedora22-x86_64-1'</span></span><br><span class="line"></span><br><span class="line">conn = libvirt.open(<span class="string">'qemu:///system'</span>)</span><br><span class="line"><span class="keyword">if</span> conn == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to open connection to qemu:///system'</span>, file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">dom = conn.lookupByID(<span class="number">6</span>)</span><br><span class="line"><span class="keyword">if</span> dom == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to find the domain '</span>+domName, file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">rd_req, rd_bytes, wr_req, wr_bytes, err = \</span><br><span class="line">dom.blockStats(<span class="string">'/path/to/linux-0.2.img'</span>)</span><br><span class="line">print(<span class="string">'Read requests issued:  '</span>+str(rd_req))</span><br><span class="line">print(<span class="string">'Bytes read:            '</span>+str(rd_bytes))</span><br><span class="line">print(<span class="string">'Write requests issued: '</span>+str(wr_req))</span><br><span class="line">print(<span class="string">'Bytes written:         '</span>+str(wr_bytes))</span><br><span class="line">print(<span class="string">'Number of errors:      '</span>+str(err))</span><br><span class="line"></span><br><span class="line">conn.close()</span><br><span class="line">exit(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p>例4.38. 获取磁盘块I/O统计数据  </p>
+<p>返回值是一个元组，包含读(写)请求的数量，和实际传输的字节数。一个块设备是由镜像文件路径或设备总线名称确定的，域的XML文件中devices/disk/target[@dev] 指定的。  </p>
+<p>除了 <code>blockStats</code> 方法,另一种方法<code>blockStatsFlags</code> 也可用。  </p>
+<hr>
+<h3 id="4-6-2-vCPU性能"><a href="#4-6-2-vCPU性能" class="headerlink" title="4.6.2. vCPU性能"></a>4.6.2. vCPU性能</h3><p>要获得vcpu的性能数据，需要使用<code>getCPUStats</code> 方法。  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Example-33.py</span></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> libvirt</span><br><span class="line"></span><br><span class="line">domName = <span class="string">'Fedora22-x86_64-1'</span></span><br><span class="line"></span><br><span class="line">conn = libvirt.open(<span class="string">'qemu:///system'</span>)</span><br><span class="line"><span class="keyword">if</span> conn == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to open connection to qemu:///system'</span>, file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">dom = conn.lookupByID(<span class="number">5</span>)</span><br><span class="line"><span class="keyword">if</span> dom == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to find the domain '</span>+domName, file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"><span class="comment"># return a list ;each cpu is a dict in the list </span></span><br><span class="line">cpu_stats = dom.getCPUStats(<span class="keyword">False</span>)</span><br><span class="line"><span class="keyword">for</span> (i, cpu) <span class="keyword">in</span> enumerate(cpu_stats):</span><br><span class="line">   print(<span class="string">'CPU '</span>+str(i)+<span class="string">' Time: '</span>+str(cpu[<span class="string">'cpu_time'</span>] / <span class="number">1000000000.</span>))</span><br><span class="line"></span><br><span class="line">conn.close()</span><br><span class="line">exit(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p>例4.39. 各个VCPU统计数据，</p>
+<p><code>getCPUStats</code> 需要一个参数，是一个布尔值。  <code>False</code> 返回一个列表，列表中的元素是字典。每个cpu的信息，每个cpu为列表中的一个dict。 <code>True</code> 返回一个列表，显示的是整体的cpu情况。<br>参数对比图:<br><img src="/pictures/翻译-libvirt开发指南-python-4.6-1.png" alt="参数对比图">  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Example-34.py</span></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> libvirt</span><br><span class="line"></span><br><span class="line">domName = <span class="string">'Fedora22-x86_64-1'</span></span><br><span class="line"></span><br><span class="line">conn = libvirt.open(<span class="string">'qemu:///system'</span>)</span><br><span class="line"><span class="keyword">if</span> conn == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to open connection to qemu:///system'</span>, file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">dom = conn.lookupByID(<span class="number">5</span>)</span><br><span class="line"><span class="keyword">if</span> dom == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to find the domain '</span>+domName, file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">stats = dom.getCPUStats(<span class="keyword">True</span>)</span><br><span class="line">print(<span class="string">'cpu_time:    '</span>+str(stats[<span class="number">0</span>][<span class="string">'cpu_time'</span>]))</span><br><span class="line">print(<span class="string">'system_time: '</span>+str(stats[<span class="number">0</span>][<span class="string">'system_time'</span>]))</span><br><span class="line">print(<span class="string">'user_time:   '</span>+str(stats[<span class="number">0</span>][<span class="string">'user_time'</span>]))</span><br><span class="line"></span><br><span class="line">conn.close()</span><br><span class="line">exit(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p>例4.40. 总CPU统计数据</p>
+<hr>
+<h3 id="4-6-3-内存统计信息"><a href="#4-6-3-内存统计信息" class="headerlink" title="4.6.3. 内存统计信息"></a>4.6.3. 内存统计信息</h3><p>使用 <code>memoryStats</code> 方法获得内存统计信息。  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Example-35.py</span></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> libvirt</span><br><span class="line"></span><br><span class="line">domName = <span class="string">'Fedora22-x86_64-1'</span></span><br><span class="line"></span><br><span class="line">conn = libvirt.open(<span class="string">'qemu:///system'</span>)</span><br><span class="line"><span class="keyword">if</span> conn == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to open connection to qemu:///system'</span>, file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">dom = conn.lookupByID(<span class="number">5</span>)</span><br><span class="line"><span class="keyword">if</span> dom == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to find the domain '</span>+domName, file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">stats  = dom.memoryStats()</span><br><span class="line">print(<span class="string">'memory used:'</span>)</span><br><span class="line"><span class="keyword">for</span> name <span class="keyword">in</span> stats:</span><br><span class="line">    print(<span class="string">'  '</span>+str(stats[name])+<span class="string">' ('</span>+name+<span class="string">')'</span>)</span><br><span class="line"></span><br><span class="line">conn.close()</span><br><span class="line">exit(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p>例4.41. 内存统计信息</p>
+<p>请注意， <code>memoryStats</code> 返回一个字典对象。<br>这个对象包含一个不确定数量的条目，这个数量根据虚拟机监控程序和客人域的能力有关。  </p>
+<hr>
+<h3 id="4-6-4-I-O统计数据"><a href="#4-6-4-I-O统计数据" class="headerlink" title="4.6.4. I/O统计数据"></a>4.6.4. I/O统计数据</h3><p>要获得网络信息，你需要域连接到主机网卡的名字(通常vnetX)。找到它，检索域的XML描述(libvirt会修改它在运行的时候)。然后，寻找devices/interface/target[@dev]元素(s):</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Example-32.py</span></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> libvirt</span><br><span class="line"><span class="keyword">from</span> xml.etree <span class="keyword">import</span> ElementTree</span><br><span class="line"></span><br><span class="line">domName = <span class="string">'Fedora22-x86_64-1'</span></span><br><span class="line"></span><br><span class="line">conn = libvirt.open(<span class="string">'qemu:///system'</span>)</span><br><span class="line"><span class="keyword">if</span> conn == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to open connection to qemu:///system'</span>, file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">dom = conn.lookupByID(<span class="number">5</span>)</span><br><span class="line"><span class="keyword">if</span> dom == <span class="keyword">None</span>:</span><br><span class="line">    print(<span class="string">'Failed to find the domain '</span>+domName, file=sys.stderr)</span><br><span class="line">    exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">tree = ElementTree.fromstring(dom.XMLDesc())</span><br><span class="line">iface = tree.find(<span class="string">'devices/interface/target'</span>).get(<span class="string">'dev'</span>)</span><br><span class="line">stats = dom.interfaceStats(iface)</span><br><span class="line">print(<span class="string">'read bytes:    '</span>+str(stats[<span class="number">0</span>]))</span><br><span class="line">print(<span class="string">'read packets:  '</span>+str(stats[<span class="number">1</span>]))</span><br><span class="line">print(<span class="string">'read errors:   '</span>+str(stats[<span class="number">2</span>]))</span><br><span class="line">print(<span class="string">'read drops:    '</span>+str(stats[<span class="number">3</span>]))</span><br><span class="line">print(<span class="string">'write bytes:   '</span>+str(stats[<span class="number">4</span>]))</span><br><span class="line">print(<span class="string">'write packets: '</span>+str(stats[<span class="number">5</span>]))</span><br><span class="line">print(<span class="string">'write errors:  '</span>+str(stats[<span class="number">6</span>]))</span><br><span class="line">print(<span class="string">'write drops:   '</span>+str(stats[<span class="number">7</span>]))</span><br><span class="line"></span><br><span class="line">conn.close()</span><br><span class="line">exit(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p>例4.42. 得到网络I/O统计数据</p>
+<p> <code>interfaceStats</code> 方法返回收到(传播)的字节数(数据包)，和接受/传输错误的数量。</p>
+<hr>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/libvirt-开发指南-教程-libvirt-Application-Development-Guides/" rel="tag"># libvirt,开发指南, 教程, libvirt_Application_Development_Guides</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/20/【翻译系列】libvirt开发指南-Python版-第三章-连接Connection/" rel="next" title="【翻译系列】libvirt开发指南-Python版-第三章-连接">
+                <i class="fa fa-chevron-left"></i> 【翻译系列】libvirt开发指南-Python版-第三章-连接
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/20/【qemu-kvm-libvirt系列】libvirt问题集合/" rel="prev" title="【qemu-kvm & libvirt系列】libvirt问题集合">
+                【qemu-kvm & libvirt系列】libvirt问题集合 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/shinubi.jpg"
+                alt="い十指演绎生活〃" />
+            
+              <p class="site-author-name" itemprop="name">い十指演绎生活〃</p>
+              <p class="site-description motion-element" itemprop="description">慎独</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第四章-客户域-Guest-Domains"><span class="nav-number">1.</span> <span class="nav-text">第四章 客户域 Guest Domains</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-概述"><span class="nav-number">1.1.</span> <span class="nav-text">4.1. 概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-列举域（Listing-Domains）"><span class="nav-number">1.2.</span> <span class="nav-text">4.2. 列举域（Listing Domains）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-获得域的状态信息"><span class="nav-number">1.3.</span> <span class="nav-text">4.3. 获得域的状态信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-1。-获取一个域的ID"><span class="nav-number">1.3.1.</span> <span class="nav-text">4.3.1。 获取一个域的ID</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-4-生命周期控制"><span class="nav-number">1.4.</span> <span class="nav-text">4.4. 生命周期控制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-1-配置和启动"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.4.1. 配置和启动</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-4-1-1-配置方法"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">4.4.1.1. 配置方法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#4-4-1-1-1-引导临时域"><span class="nav-number">1.4.1.1.1.</span> <span class="nav-text">4.4.1.1.1. 引导临时域</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-4-1-1-2。-定义和引导一个永久性客户域"><span class="nav-number">1.4.1.1.2.</span> <span class="nav-text">4.4.1.1.2。 定义和引导一个永久性客户域</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-4-1-2-新的客户域配置技术"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">4.4.1.2. 新的客户域配置技术</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#4-4-1-2-1-CDROM-ISO镜像配置"><span class="nav-number">1.4.1.2.1.</span> <span class="nav-text">4.4.1.2.1. CDROM / ISO镜像配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-4-1-2-2-PXE启动配置"><span class="nav-number">1.4.1.2.2.</span> <span class="nav-text">4.4.1.2.2. PXE启动配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-4-1-2-3-直接内核引导配置Direct-Kernel-Boot-Provisioning"><span class="nav-number">1.4.1.2.3.</span> <span class="nav-text">4.4.1.2.3. 直接内核引导配置Direct Kernel Boot Provisioning</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-2-停止Stopping"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.4.2. 停止Stopping</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-3-“暂停-恢复”-和-“保存-恢复”-Suspend-Resume-and-Save-Restore"><span class="nav-number">1.4.3.</span> <span class="nav-text">4.4.3. “暂停/恢复” 和 “保存/恢复” (Suspend/Resume and Save/Restore)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-4-迁移-Migration"><span class="nav-number">1.4.4.</span> <span class="nav-text">4.4.4  迁移 Migration</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-5-自动运行-Autostart"><span class="nav-number">1.4.5.</span> <span class="nav-text">4.4.5. 自动运行 Autostart</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-5-域配置"><span class="nav-number">1.5.</span> <span class="nav-text">4.5. 域配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-5-1-引导模式"><span class="nav-number">1.5.1.</span> <span class="nav-text">4.5.1. 引导模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-5-2-内存-CPU资源"><span class="nav-number">1.5.2.</span> <span class="nav-text">4.5.2. 内存/ CPU资源</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-6-监控性能"><span class="nav-number">1.6.</span> <span class="nav-text">4.6. 监控性能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-6-1-域块设备性能"><span class="nav-number">1.6.1.</span> <span class="nav-text">4.6.1. 域块设备性能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-6-2-vCPU性能"><span class="nav-number">1.6.2.</span> <span class="nav-text">4.6.2. vCPU性能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-6-3-内存统计信息"><span class="nav-number">1.6.3.</span> <span class="nav-text">4.6.3. 内存统计信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-6-4-I-O统计数据"><span class="nav-number">1.6.4.</span> <span class="nav-text">4.6.4. I/O统计数据</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">い十指演绎生活〃</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
